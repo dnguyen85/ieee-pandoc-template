@@ -1,6 +1,6 @@
 PY=python
 PANDOC=pandoc
-OUTPUTFILE=linkpursuit
+OUTPUTFILE=paper
 
 BASEDIR=.
 INPUTDIR=$(BASEDIR)/source
@@ -35,4 +35,14 @@ tex:
 clean:
 	cd "$(OUTPUTDIR)" && latexmk -C
 
-.PHONY: pdf tex
+OS = $(shell uname -s)
+ifeq ($(strip $(OS)),Linux)
+	PDF_VIEW = xdg-open
+else
+	PDF_VIEW = open -a /Applications/Preview.app
+endif
+
+view: 
+	$(PDF_VIEW) "$(OUTPUTDIR)/$(OUTPUTFILE).pdf" &
+
+.PHONY: pdf tex view

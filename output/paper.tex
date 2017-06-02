@@ -1,0 +1,179 @@
+% arara: pdflatex: {action: nonstopmode , draft: yes, options: "-file-line-error"}
+% arara: biber
+% arara: pdflatex: {action: nonstopmode, draft: yes, options: "-file-line-error"}
+% arara: pdflatex: {action: nonstopmode, synctex: yes, options: "-file-line-error"}
+
+\documentclass[conference]{IEEEtran}
+\usepackage{lmodern}        % Help with fonts
+
+% Overwrite \begin{figure}[htbp] with \begin{figure}[H]
+% (DN) This provides a way to force manual placement of figures from pandoc
+% using actual figure text positions
+\usepackage{float}
+\let\origfigure=\figure
+\let\endorigfigure=\endfigure
+\renewenvironment{figure}[1][]{%
+\origfigure[t]
+}{%
+\endorigfigure
+}
+
+
+% Math - always used by default
+\usepackage{amssymb,amsmath}        % Math package
+\usepackage{ifxetex,ifluatex}       % checking for active latex engine
+\usepackage{fixltx2e}               % provides \textsubscript
+
+% Math font setup
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 
+  % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+% use microtype - always on by default
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+\usepackage[backend=biber,style=ieee,doi=false,isbn=false,url=false,arxiv=false]{biblatex} % Biblatex template style
+\bibliography{./bib/Paper_Refworks-2017-pimrc_2017.bib,./bib/anton.bib}           % Bib file
+
+% Hyperref - always on by default
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true,draft]{hyperref}
+\fi
+
+% Hyperref Setup 
+\hypersetup{        
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+% Pandoc 1.14 bug fix: Tight list
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Numbering sections
+\setcounter{secnumdepth}{5}
+
+
+% Date
+\date{}
+
+%%%%%%%%% Extra preamble info %%%%%%%%%%%%%%%
+
+% ---- CUSTOM AMPERSAND
+% \newcommand{\amper}{{\fontspec[Scale=.95]{Adobe Caslon Pro}\selectfont\itshape\&}}
+
+% Set figure legends and captions to be smaller sized sans serif font
+% \usepackage[font=\tiny]{caption}
+\usepackage[font=footnotesize]{caption}
+
+% reduce space between text and floats
+\addtolength{\textfloatsep}{-0.5cm}
+
+\usepackage{siunitx}
+
+% Don't let floats cross subsections
+% \usepackage[section]{tex_packages/extraplaceins}
+
+% pandoc-crossref defines (overridden by this file, so adding back here)
+\usepackage{cleveref}
+\crefname{figure}{Fig.}{Figs.}          % Label format for 'figure' env.
+\Crefname{figure}{Figure}{Figures}      % Start-of-sentence variant
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\crefname{algorithm}{Alg.}{Algs.}
+\Crefname{algorithm}{Algorithm}{Algorithms}
+\crefname{equation}{Eq.}{Eqs.}
+\Crefname{equation}{Equation}{Equations}
+
+% Small bib
+\AtBeginBibliography{\small}
+
+\usepackage{algorithm} % <- from the `algorithms` package
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\algnewcommand\algorithmicinput{\textbf{Input:}}
+\algnewcommand\Input{\item[\algorithmicinput]}
+\algnewcommand\algorithmicoutput{\textbf{Output:}}
+\algnewcommand\Output{\item[\algorithmicoutput]}
+\algnewcommand\algorithmicto{\textbf{to}}
+
+% Subfigures
+\usepackage{subfig}
+
+% IEEE options
+% \usepackage[letterpaper, left=1in, right=1in, bottom=1in, top=0.75in]{geometry}
+%\usepackage{fancyhdr}
+%\usepackage{graphicx}
+%\usepackage{psfrag}
+%\usepackage{subfigure}
+%\usepackage{url}
+%\usepackage{stfloats}
+%\usepackage{amsmath}
+%\usepackage{array}
+%\usepackage{fancyhdr}
+%\usepackage{epsfig}
+%\usepackage{amssymb}
+%\usepackage{color}
+
+%%%%%%%%%%%%%%% Document %%%%%%%%%%%%%%%
+\begin{document}
+
+
+
+
+% Any customization before body
+
+
+% Body of text
+\title{Paper title}
+
+\author{
+    \IEEEauthorblockN{
+    Anton Paatelma\IEEEauthorrefmark{1}\IEEEauthorrefmark{2},  
+    Danh H. Nguyen\IEEEauthorrefmark{2}, 
+    Harri Saarnisaari\IEEEauthorrefmark{1}, Nagarajan Kandasamy, and Kapil R. Dandekar}
+    \IEEEauthorblockA{\IEEEauthorrefmark{1} CWC, University of Oulu, Finland. Email: anton@paatelma.com, harri.saarnisaari@ee.oulu.fi} 
+    \IEEEauthorblockA{Drexel University, Philadelphia, PA.
+    Email: \{dnguyen, kandasamy, dandekar\}@drexel.edu}
+    \IEEEauthorblockA{\IEEEauthorrefmark{2} Co-primary Authors\vspace{-4mm}} 
+    }
+
+\maketitle
+
+\begin{abstract}
+Abstract goes here
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+Into goes here\ldots{}
+
+
+% Print bibliography - biblatex only
+\printbibliography
+
+% Any customization after Body
+\end{document}

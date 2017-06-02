@@ -1,0 +1,256 @@
+% arara: pdflatex: {action: nonstopmode , draft: yes, options: "-file-line-error"}
+% arara: biber
+% arara: pdflatex: {action: nonstopmode, draft: yes, options: "-file-line-error"}
+% arara: pdflatex: {action: nonstopmode, synctex: yes, options: "-file-line-error"}
+
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+$if(fontfamily)$
+\usepackage{$fontfamily$}
+$else$
+\usepackage{lmodern}        % Help with fonts
+$endif$
+
+% Overwrite \begin{figure}[htbp] with \begin{figure}[H]
+% (DN) This provides a way to force manual placement of figures from pandoc
+% using actual figure text positions
+\usepackage{float}
+\let\origfigure=\figure
+\let\endorigfigure=\endfigure
+\renewenvironment{figure}[1][]{%
+\origfigure[t]
+}{%
+\endorigfigure
+}
+
+$if(linestretch)$
+\usepackage{setspace}       % Controlling line spacing
+\setstretch{$linestretch$}
+$endif$
+
+% Math - always used by default
+\usepackage{amssymb,amsmath}        % Math package
+\usepackage{ifxetex,ifluatex}       % checking for active latex engine
+\usepackage{fixltx2e}               % provides \textsubscript
+
+% Math font setup
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 
+  % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+$if(mainfont)$
+    \setmainfont{$mainfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek){$mathfont$}
+$endif$
+\fi
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+% use microtype - always on by default
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}  % Geometry
+$endif$
+$if(natbib)$
+\usepackage{natbib}     % Natbib
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+$if(biblatex)$
+\usepackage[$for(biblatex-options)$$biblatex-options$$sep$,$endfor$]{biblatex} % Biblatex template style
+$if(biblio-files)$
+\bibliography{$biblio-files$}           % Bib file
+$endif$
+$endif$
+$if(listings)$
+\usepackage{listings}                   % Listings
+$endif$
+$if(highlighting-macros)$
+%% Highlighting macros
+$highlighting-macros$                   
+%% End highlighting macros
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}                 % Verbatim in note
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}       % Tables
+$endif$
+$if(graphics)$
+\usepackage{graphicx}                 % Graphics
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+
+% Hyperref - always on by default
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[$for(hyperref-options)$$hyperref-options$$sep$,$endfor$]{hyperref}
+\fi
+
+% Hyperref Setup 
+$if(colorlinks)$
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+$endif$
+\hypersetup{        
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}  
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}             % strikeout
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+% Pandoc 1.14 bug fix: Tight list
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Numbering sections
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+$if(verbatim-in-note)$
+\VerbatimFootnotes  % allows verbatim text in footnotes
+$endif$
+$if(lang)$
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{$mainlang$}
+\else
+  % pdflatex
+  \usepackage[$lang$]{babel}
+\fi
+$endif$
+
+$if(title)$
+% Document title
+\title{$title$$if(subtitle)$\\\vspace{0.5em}{\large $subtitle$}$endif$}
+$endif$
+$if(author)$
+% author
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+% Date
+\date{$date$}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+%%%%%%%%%%%%%%% Document %%%%%%%%%%%%%%%
+\begin{document}
+
+$if(title)$
+\maketitle
+$endif$
+
+$if(abstract)$
+% Abstract
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$if(keyword)$
+\begin{IEEEkeywords}
+$for(keyword)$
+    $keyword$$sep$;
+$endfor$
+\end{IEEEkeywords}
+$endif$
+
+% Any customization before body
+$for(include-before)$
+$include-before$
+
+$endfor$
+
+$if(toc)$
+{
+% Table of content
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+% Body of text
+$body$
+
+$if(natbib)$
+% Bibliography entries - natbib only
+$if(biblio-files)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$biblio-files$}
+$endif$
+$endif$
+
+$if(biblatex)$
+% Print bibliography - biblatex only
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+% Any customization after Body
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
