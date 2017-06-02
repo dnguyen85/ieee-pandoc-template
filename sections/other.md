@@ -1,5 +1,0 @@
-# Acknowledgments {-}
-
-thanks everyone
-
-# References

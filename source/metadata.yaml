@@ -1,0 +1,25 @@
+---
+biblatex-options:
+    - backend=biber
+    - style=ieee
+    - doi=false
+    - isbn=false
+    - url=false
+    - arxiv=false
+
+documentclass: IEEEtran
+
+classoption:
+    - conference
+
+cref: true
+
+autoSectionLabels: true
+
+hyperref-options:
+    - unicode=true
+    - draft
+
+...
+
+
