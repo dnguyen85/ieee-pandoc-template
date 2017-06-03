@@ -3,7 +3,7 @@
 % arara: pdflatex: {action: nonstopmode, draft: yes, options: "-file-line-error"}
 % arara: pdflatex: {action: nonstopmode, synctex: yes, options: "-file-line-error"}
 
-\documentclass[conference]{IEEEtran}
+\documentclass[journal,comsoc]{IEEEtran}
 \usepackage{lmodern}        % Help with fonts
 
 % Overwrite \begin{figure}[htbp] with \begin{figure}[H]
@@ -85,6 +85,40 @@
 % ---- CUSTOM AMPERSAND
 % \newcommand{\amper}{{\fontspec[Scale=.95]{Adobe Caslon Pro}\selectfont\itshape\&}}
 
+
+% optional T1 font encoding for journal
+\usepackage[T1]{fontenc}
+
+% *** MATH PACKAGES ***
+%
+\usepackage{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics.
+% Do NOT use the amsbsy package under comsoc mode as that feature is
+% already built into the Times Math font (newtxmath, mathtime, etc.).
+% 
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/pkg/amsmath
+
+
+% Select a Times math font under comsoc mode or else one will automatically
+% be selected for you at the document start. This is required as Communications
+% Society journals use a Times, not Computer Modern, math font.
+\usepackage[cmintegrals]{newtxmath}
+% The freely available newtxmath package was written by Michael Sharpe and
+% provides a feature rich Times math font. The cmintegrals option, which is
+% the default under IEEEtran, is needed to get the correct style integral
+% symbols used in Communications Society journals. Version 1.451, July 28,
+% 2015 or later is recommended. Also, do *not* load the newtxtext.sty package
+% as doing so would alter the main text font.
+% http://www.ctan.org/pkg/newtx
+
+
 % Set figure legends and captions to be smaller sized sans serif font
 % \usepackage[font=\tiny]{caption}
 \usepackage[font=footnotesize]{caption}
@@ -148,18 +182,21 @@
 
 
 % Body of text
-\title{Paper title}
+\title{Bare Demo of IEEEtran.cls for\\ IEEE Communications Society Journals}
 
 \author{
-    \IEEEauthorblockN{
-    Anton Paatelma\IEEEauthorrefmark{1}\IEEEauthorrefmark{2},  
-    Danh H. Nguyen\IEEEauthorrefmark{2}, 
-    Harri Saarnisaari\IEEEauthorrefmark{1}, Nagarajan Kandasamy, and Kapil R. Dandekar}
-    \IEEEauthorblockA{\IEEEauthorrefmark{1} CWC, University of Oulu, Finland. Email: anton@paatelma.com, harri.saarnisaari@ee.oulu.fi} 
-    \IEEEauthorblockA{Drexel University, Philadelphia, PA.
-    Email: \{dnguyen, kandasamy, dandekar\}@drexel.edu}
-    \IEEEauthorblockA{\IEEEauthorrefmark{2} Co-primary Authors\vspace{-4mm}} 
-    }
+    Danh~H.~Nguyen,~\IEEEmembership{Member,~IEEE,}
+    John~Doe,~\IEEEmembership{Fellow,~OSA,}
+    and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
+\thanks{M. Shell was with the Department
+of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
+GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}%
+\thanks{J. Doe and J. Doe are with Anonymous University.}%
+\thanks{Manuscript received April 19, 2005; revised August 26, 2015.}
+}
+
+\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Communications Society Journals}
 
 \maketitle
 
@@ -176,4 +213,44 @@ Into goes here\ldots{}
 \printbibliography
 
 % Any customization after Body
+% biography section
+% 
+% If you have an EPS/PDF photo (graphicx package needed) extra braces are
+% needed around the contents of the optional argument to biography to prevent
+% the LaTeX parser from getting confused when it sees the complicated
+% \includegraphics command within an optional argument. (You could create
+% your own custom macro containing the \includegraphics command to make things
+% simpler here.)
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+% or if you just want to reserve a space for a photo:
+
+\begin{IEEEbiography}{Michael Shell}
+Biography text here.
+\end{IEEEbiography}
+
+% if you will not have a photo at all:
+\begin{IEEEbiographynophoto}{John Doe}
+Biography text here.
+\end{IEEEbiographynophoto}
+
+% insert where needed to balance the two columns on the last page with
+% biographies
+%\newpage
+
+\begin{IEEEbiographynophoto}{Jane Doe}
+Biography text here.
+\end{IEEEbiographynophoto}
+
+% You can push biographies down or up by placing
+% a \vfill before or after them. The appropriate
+% use of \vfill depends on what kind of text is
+% on the last page and whether or not the columns
+% are being equalized.
+
+%\vfill
+
+% Can be used to pull up biographies so that the bottom of the last one
+% is flush with the other column.
+%\enlargethispage{-5in}
+
 \end{document}

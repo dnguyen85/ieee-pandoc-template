@@ -10,7 +10,8 @@ biblatex-options:
 documentclass: IEEEtran
 
 classoption:
-    - conference
+    - journal
+    - comsoc
 
 cref: true
 

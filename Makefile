@@ -23,6 +23,7 @@ tex:
 	$(INPUTDIR)/metadata.yaml \
 	-o "$(OUTPUTDIR)/$(OUTPUTFILE).tex" \
 	-H "$(STYLEDIR)/preamble.tex" \
+	--include-after-body "$(STYLEDIR)/postamble.tex" \
 	--template="$(STYLEDIR)/template.tex" \
 	-S \
 	-N \
