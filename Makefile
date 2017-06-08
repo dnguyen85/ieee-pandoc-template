@@ -8,7 +8,7 @@ OUTPUTDIR=$(BASEDIR)/output
 STYLEDIR=$(BASEDIR)/style
 BIBDIR=$(BASEDIR)/bib
 
-BIBFILE=$(BIBDIR)/IEEEabrv.bib,$(BIBDIR)/paper.bib
+BIBFILE=$(BIBDIR)/IEEEabrv,$(BIBDIR)/papers
 
 # Default target
 all: pdf

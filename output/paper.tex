@@ -1,5 +1,5 @@
 % arara: pdflatex: {action: nonstopmode , draft: yes, options: "-file-line-error"}
-% arara: biber
+% arara: bibtex
 % arara: pdflatex: {action: nonstopmode, draft: yes, options: "-file-line-error"}
 % arara: pdflatex: {action: nonstopmode, synctex: yes, options: "-file-line-error"}
 
@@ -48,9 +48,7 @@
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 
-\usepackage[backend=biber,style=ieee,doi=false,isbn=false,url=false,arxiv=false]{biblatex} % Biblatex template style
-\bibliography{./bib/Paper_Refworks-2017-pimrc_2017.bib,./bib/anton.bib}           % Bib file
-
+\usepackage{cite}     % Natbib
 % Hyperref - always on by default
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
@@ -118,6 +116,9 @@
 % as doing so would alter the main text font.
 % http://www.ctan.org/pkg/newtx
 
+% Bold math
+\usepackage{bm}
+
 
 % Set figure legends and captions to be smaller sized sans serif font
 % \usepackage[font=\tiny]{caption}
@@ -141,9 +142,6 @@
 \Crefname{algorithm}{Algorithm}{Algorithms}
 \crefname{equation}{Eq.}{Eqs.}
 \Crefname{equation}{Equation}{Equations}
-
-% Small bib
-\AtBeginBibliography{\small}
 
 \usepackage{algorithm} % <- from the `algorithms` package
 \usepackage{algorithmicx}
@@ -206,11 +204,11 @@ Abstract goes here
 
 \section{Introduction}\label{sec:introduction}
 
-Into goes here\ldots{}
+Into goes here\ldots{} \cite{Ujhazi-etal_2010}
 
-
-% Print bibliography - biblatex only
-\printbibliography
+% Bibliography entries - natbib only
+\bibliographystyle{IEEEtran}
+\bibliography{./bib/IEEEabrv,./bib/papers}
 
 % Any customization after Body
 % biography section
