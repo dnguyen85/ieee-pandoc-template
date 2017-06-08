@@ -8,7 +8,7 @@ OUTPUTDIR=$(BASEDIR)/output
 STYLEDIR=$(BASEDIR)/style
 BIBDIR=$(BASEDIR)/bib
 
-BIBFILE=$(BIBDIR)/Paper_Refworks-2017-pimrc_2017.bib,$(BIBDIR)/anton.bib
+BIBFILE=$(BIBDIR)/IEEEabrv.bib,$(BIBDIR)/paper.bib
 
 # Default target
 all: pdf
@@ -20,7 +20,7 @@ pdf: tex
 # Tex target use biblatex to generate bib entries - usenix mod
 tex:
 	pandoc $(INPUTDIR)/*.md \
-	$(INPUTDIR)/metadata.yaml \
+	$(STYLEDIR)/metadata.yaml \
 	-o "$(OUTPUTDIR)/$(OUTPUTFILE).tex" \
 	-H "$(STYLEDIR)/preamble.tex" \
 	--include-after-body "$(STYLEDIR)/postamble.tex" \
@@ -29,9 +29,11 @@ tex:
 	-N \
 	--wrap=preserve \
 	-F pandoc-crossref \
-	--biblatex \
+	--natbib \
 	-V biblio-files="$(BIBFILE)" \
 	--latex-engine=pdflatex 
+	sed -i 's/\\cite[t,p]{/\\cite{/g' "$(OUTPUTDIR)/$(OUTPUTFILE).tex" 
+	sed -i 's/{natbib}/{cite}/' "$(OUTPUTDIR)/$(OUTPUTFILE).tex"	
 	
 clean:
 	cd "$(OUTPUTDIR)" && latexmk -C

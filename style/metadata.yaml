@@ -1,17 +1,11 @@
 ---
-biblatex-options:
-    - backend=biber
-    - style=ieee
-    - doi=false
-    - isbn=false
-    - url=false
-    - arxiv=false
-
 documentclass: IEEEtran
+biblio-style: IEEEtran
 
 classoption:
     - journal
     - comsoc
+
 
 cref: true
 
