@@ -23,6 +23,7 @@ tex:
 	$(INPUTDIR)/metadata.yaml \
 	-o "$(OUTPUTDIR)/$(OUTPUTFILE).tex" \
 	-H "$(STYLEDIR)/preamble.tex" \
+	-B "$(INPUTDIR)/00_title_abstract.tex" \
 	--template="$(STYLEDIR)/template.tex" \
 	-S \
 	-N \

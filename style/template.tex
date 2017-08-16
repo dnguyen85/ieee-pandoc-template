@@ -6,8 +6,6 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$lang$,$endif$$if(papersize)$$papersize$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(fontfamily)$
 \usepackage{$fontfamily$}
-$else$
-\usepackage{lmodern}        % Help with fonts
 $endif$
 
 % Overwrite \begin{figure}[htbp] with \begin{figure}[H]
@@ -30,7 +28,6 @@ $endif$
 % Math - always used by default
 \usepackage{amssymb,amsmath}        % Math package
 \usepackage{ifxetex,ifluatex}       % checking for active latex engine
-\usepackage{fixltx2e}               % provides \textsubscript
 
 % Math font setup
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 
@@ -107,7 +104,8 @@ $if(graphics)$
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
 
-% Hyperref - always on by default
+% Hyperref
+$if(hyperref)$
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -121,15 +119,18 @@ $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 $endif$
 \hypersetup{        
+            breaklinks=true,
+            bookmarks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            pdfborder={0 0 0}}
 $if(colorlinks)$
             colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
-$else$
-            pdfborder={0 0 0},
+            citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
 $endif$
-            breaklinks=true}
+$endif$
 \urlstyle{same}  % don't use monospace font for urls
 
 $if(links-as-notes)$
@@ -179,6 +180,7 @@ $endif$
 % Date
 \date{$date$}
 
+%%%%%%%%%%%% Extra preamble information %%%%%%%%%%%%%
 $for(header-includes)$
 $header-includes$
 $endfor$
